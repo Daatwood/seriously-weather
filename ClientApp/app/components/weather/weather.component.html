@@ -1,0 +1,44 @@
+﻿<div *ngIf="message">
+    <div class="alert alert-danger">
+        {{message}}
+        <a class="close" (click)="clearMessage()">x</a>
+    </div>
+</div>
+<div class="form-row">
+    <div class="col-md-3"></div>
+    <div class="col-md-6">
+        <div class="input-group">
+            <input class="form-control" type="text" id="city" [(ngModel)]="city" placeholder="Enter a City" (keyup.enter)="getWeather(city)"/>
+            <span class="input-group-btn">
+                <input class="btn btn-primary" type="button" value="Go!" (click)="getWeather(city)" />
+            </span>
+        </div>
+    </div>
+</div>
+<div class="form-row">
+    <div *ngIf="weather">
+        <div class="jumbotron">
+            <h2 class="text-center text-capitalize">
+                <span class="text-primary">{{prefix}} {{weather.summary}}</span>  <small class="text-muted"> in {{weather.city}}, {{weather.country}}</small>
+            </h2>
+            <h1 class="text-center"><span class="text-success">{{weather.temperature}}° F</span></h1>
+            <div class="container">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <p class="lead text-center">High: {{weather.high}}° F</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="lead text-center">Humidity {{weather.humidity}}%</p>
+                    </div>
+                    <div class="col-sm-4">
+                        <p class="lead text-center">Low: {{weather.low}}° F</p>
+                    </div>
+                </div>
+            </div>
+            <hr class="my-4">
+            <quote></quote>
+        </div>
+    </div>
+
+</div>
+

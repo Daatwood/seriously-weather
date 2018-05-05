@@ -1,0 +1,11 @@
+﻿
+<blockquote class="blockquote">
+    <div *ngIf="quote">
+        <p>{{quote.quote}}</p>
+        <footer class="blockquote-footer">{{quote.author}} <cite title="Source Title"><a href={{quote.link}} target="_blank">Source</a></cite></footer>
+    </div>
+    <a class="clickme" (click)="getQuote()">
+        <span class='glyphicon glyphicon-refresh'></span>
+    </a>
+</blockquote>
+
