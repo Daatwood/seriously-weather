@@ -19,6 +19,7 @@ namespace seriously_weather.Controllers
             {
                 try
                 {
+
                     client.BaseAddress = new System.Uri("http://quotesondesign.com");
                     var response = await client.GetAsync($"wp-json/posts?filter[orderby]=rand&filter[posts_per_page]=1");
                     response.EnsureSuccessStatusCode();
@@ -28,7 +29,7 @@ namespace seriously_weather.Controllers
                     return Ok(new
                     {
                         Quote = MassageString(rawQuote.Content),
-                        Author = rawQuote.Title,
+                        Author = MassageString(rawQuote.Title),
                         rawQuote.Link
                     });
                 }

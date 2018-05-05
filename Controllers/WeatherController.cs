@@ -18,7 +18,7 @@ namespace seriously_weather.Controllers
                 try
                 {
                     client.BaseAddress = new System.Uri("http://api.openweathermap.org");
-                    var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid=NICE_TRY&units=imperial");
+                    var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid=NOPE&units=imperial");
                     response.EnsureSuccessStatusCode();
 
                     var stringResult = await response.Content.ReadAsStringAsync();
@@ -29,6 +29,7 @@ namespace seriously_weather.Controllers
                         Temperature = rawWeather.Main.Temp,
                         High = rawWeather.Main.Temp_Max,
                         Low = rawWeather.Main.Temp_Min,
+                        IconUrl = $"http://openweathermap.org/img/w/{rawWeather.Weather.FirstOrDefault().Icon}.png",
                         rawWeather.Main.Humidity,
                         Summary = rawWeather.Weather.FirstOrDefault().Description,
                         City = rawWeather.Name,
@@ -54,6 +55,7 @@ namespace seriously_weather.Controllers
     public class WeatherDescription{
         public string Main { get; set; }
         public string Description { get; set; }
+        public string Icon { get; set; }
     }
     public class Main {
         public string Temp { get; set; }

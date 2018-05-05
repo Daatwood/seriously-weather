@@ -1,4 +1,4 @@
-﻿import { Component, OnChanges, Directive } from '@angular/core';
+﻿import { Component } from '@angular/core';
 import { Http } from '@angular/http';
 
 @Component({
@@ -6,23 +6,26 @@ import { Http } from '@angular/http';
     template: require('./quote.component.html'),
     styleUrls: ['./quote.component.css']
 })
-@Directive({selector: 'quote'})
 export class QuoteComponent{
     public quote: Quote;
-    public categories: string[];
+    public fetchingQuote: boolean;
+    public message: string = "";
 
-    constructor(private http: Http){
-        this.categories = ["funny", "inspire", "management", "sports", "life", "love", "art", "students"];
-    }
+    constructor(private http: Http){}
 
     public getQuote(){
+        this.fetchingQuote = true;
+        this.message = "";
         this.http.get('/api/quote/random/').subscribe(result => {
             this.quote = result.json();
-        }, error => console.error(error));
+            this.fetchingQuote = false;
+        }, error => this.handleError(error));
     }
 
-    private randomCategory() {
-        return this.categories[Math.floor(Math.random() * this.categories.length)];
+    handleError(error: string){
+        this.fetchingQuote = false;
+        this.message = "Uh oh! An error occurred fetching quote.";
+        console.error('Boom... '+error);
     }
 
 }

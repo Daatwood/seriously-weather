@@ -4,20 +4,20 @@ import { QuoteComponent } from './../quote/quote.component';
 
 @Component({
     selector: 'weather',
-    template: require('./weather.component.html')
+    template: require('./weather.component.html'),
+    styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent {
     public weather: Weather;
     public adjectives: string[];
     public prefix: string;
     public message: string;
-    private quoteComponent: QuoteComponent;
+    public location: Coordinates;
+    public fetchingWeather: boolean;
+    public isCelcius: boolean = false;
     @ViewChild(QuoteComponent)
     set setQuote(quote: QuoteComponent){
-        if (quote) {
-            quote.getQuote();
-        }
-        this.quoteComponent = quote;
+        if (quote) quote.getQuote();
     }
 
     constructor(private http: Http){
@@ -25,18 +25,39 @@ export class WeatherComponent {
     }
    
     public getWeather(cityName: string){
+        this.fetchingWeather = true;
+        this.clearMessage();
         this.http.get('/api/weather/city/'+cityName).subscribe(result => {
             this.weather = result.json();
             this.prefix = this.randomPrefix();
-            if (this.quoteComponent) this.quoteComponent.getQuote();
+            this.fetchingWeather = false;
         }, error => this.handleError(error, cityName));
+    }
+
+    public getGeolocation(){
+        if(navigator.geolocation){
+            navigator.geolocation.getCurrentPosition(position => {
+            this.location = position.coords;
+            console.log(position.coords); 
+            });
+        }
     }
 
     public clearMessage(){
         this.message = "";
     } 
 
+    public formattedWeather(tempString: string){
+        let temp = (this.isCelcius ? this.toCelcius(Number(tempString)) : Number(tempString));
+        return temp.toFixed(1) + "° " + (this.isCelcius ? 'C' : 'F');
+    }
+
+    toCelcius(temp: number) {
+        return ((temp - 32) * 5/9);
+    }
+
     handleError(error: string, cityName: string){
+        this.fetchingWeather = false;
         this.message = "Uh oh! Trouble locating '"+cityName+"', Try something else.";
         console.error('Boom... '+error);
     }
@@ -50,6 +71,7 @@ interface Weather {
     temperature: string;
     high: string;
     low: string;
+    iconUrl: string;
     humidity: string;
     summary: string;
     city: string;

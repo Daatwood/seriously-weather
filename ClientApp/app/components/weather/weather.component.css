@@ -2,3 +2,7 @@
     cursor: pointer !important;
     float: right
 }
+
+.top-padding {
+    margin-top: 50px
+}

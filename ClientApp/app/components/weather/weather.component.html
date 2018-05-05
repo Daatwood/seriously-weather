@@ -4,34 +4,39 @@
         <a class="close" (click)="clearMessage()">x</a>
     </div>
 </div>
+<div class="top-padding"><p *ngIf="fetchingWeather" class="lead text-center">Loading weather...</p></div>
 <div class="form-row">
-    <div class="col-md-3"></div>
-    <div class="col-md-6">
+    <div class="col-lg-5 col-lg-offset-3 col-md-6 col-md-offset-3">
         <div class="input-group">
             <input class="form-control" type="text" id="city" [(ngModel)]="city" placeholder="Enter a City" (keyup.enter)="getWeather(city)"/>
             <span class="input-group-btn">
                 <input class="btn btn-primary" type="button" value="Go!" (click)="getWeather(city)" />
+                <!--<input class="btn btn-primary" type="button" value="Get Location" (click)="getGeolocation()" />-->
             </span>
         </div>
     </div>
 </div>
 <div class="form-row">
     <div *ngIf="weather">
-        <div class="jumbotron">
+        <div class="top-padding jumbotron">
+            <a (click)="isCelcius = !isCelcius" ><small class="pull-right">To {{isCelcius ? 'Fahrenheit' : 'Celcius'}}</small></a>
             <h2 class="text-center text-capitalize">
                 <span class="text-primary">{{prefix}} {{weather.summary}}</span>  <small class="text-muted"> in {{weather.city}}, {{weather.country}}</small>
             </h2>
-            <h1 class="text-center"><span class="text-success">{{weather.temperature}}° F</span></h1>
+            <h1 class="text-center">
+                <img src={{weather.iconUrl}} alt='Icon depicting current weather.'/>
+                <span class="text-success">{{formattedWeather(weather.temperature)}}</span>
+            </h1>
             <div class="container">
                 <div class="row">
-                    <div class="col-sm-4">
-                        <p class="lead text-center">High: {{weather.high}}° F</p>
+                    <div class="col-sm-4 text-danger">
+                        <p class="lead text-center ">High: <strong>{{formattedWeather(weather.high)}}</strong></p>
                     </div>
-                    <div class="col-sm-4">
-                        <p class="lead text-center">Humidity {{weather.humidity}}%</p>
+                    <div class="col-sm-4 text-info">
+                        <p class="lead text-center">Low: <strong>{{formattedWeather(weather.low)}}</strong></p>
                     </div>
-                    <div class="col-sm-4">
-                        <p class="lead text-center">Low: {{weather.low}}° F</p>
+                    <div class="col-sm-4 text-warning">
+                        <p class="lead text-center">Humidity <strong>{{weather.humidity}}%</strong></p>
                     </div>
                 </div>
             </div>

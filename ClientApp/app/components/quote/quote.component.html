@@ -1,6 +1,9 @@
-﻿
+﻿<p *ngIf="fetchingQuote"><em>Retrieving quote...</em></p>
 <blockquote class="blockquote">
-    <div *ngIf="quote">
+    <div *ngIf="message">
+        <p class="text-danger">{{message}}</p>
+    </div>
+    <div *ngIf="quote && !fetchingQuote">
         <p>{{quote.quote}}</p>
         <footer class="blockquote-footer">{{quote.author}} <cite title="Source Title"><a href={{quote.link}} target="_blank">Source</a></cite></footer>
     </div>
