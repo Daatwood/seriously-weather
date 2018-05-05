@@ -4,6 +4,7 @@ using System.Threading.Tasks;
 using Newtonsoft.Json;
 using System.Collections.Generic;
 using System.Linq;
+using System;
 
 namespace seriously_weather.Controllers
 {
@@ -17,8 +18,9 @@ namespace seriously_weather.Controllers
             {
                 try
                 {
+                    var apiKey = Environment.GetEnvironmentVariable("OPEN_WEATHER_API_KEY");
                     client.BaseAddress = new System.Uri("http://api.openweathermap.org");
-                    var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid=NOPE&units=imperial");
+                    var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid={apiKey}&units=imperial");
                     response.EnsureSuccessStatusCode();
 
                     var stringResult = await response.Content.ReadAsStringAsync();
