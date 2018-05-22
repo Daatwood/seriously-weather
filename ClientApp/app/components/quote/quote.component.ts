@@ -3,7 +3,7 @@ import { Http } from '@angular/http';
 
 @Component({
     selector: 'quote',
-    template: require('./quote.component.html'),
+    templateUrl: './quote.component.html',
     styleUrls: ['./quote.component.css']
 })
 export class QuoteComponent{

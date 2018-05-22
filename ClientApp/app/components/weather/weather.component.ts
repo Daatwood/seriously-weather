@@ -4,7 +4,7 @@ import { QuoteComponent } from './../quote/quote.component';
 
 @Component({
     selector: 'weather',
-    template: require('./weather.component.html'),
+    templateUrl: './weather.component.html',
     styleUrls: ['./weather.component.css']
 })
 export class WeatherComponent {
@@ -15,6 +15,7 @@ export class WeatherComponent {
     public location: Coordinates;
     public fetchingWeather: boolean;
     public isCelcius: boolean = false;
+    public city: string;
     @ViewChild(QuoteComponent)
     set setQuote(quote: QuoteComponent){
         if (quote) quote.getQuote();

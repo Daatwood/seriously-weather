@@ -1,7 +1,7 @@
 ﻿<div *ngIf="message">
     <div class="alert alert-danger">
         {{message}}
-        <a class="close" (click)="clearMessage()">x</a>
+        <a class="pull-right cursor" (click)="clearMessage()">x</a>
     </div>
 </div>
 <div class="top-padding"><p *ngIf="fetchingWeather" class="lead text-center">Loading weather...</p></div>
@@ -19,7 +19,7 @@
 <div class="form-row">
     <div *ngIf="weather">
         <div class="top-padding jumbotron">
-            <a (click)="isCelcius = !isCelcius" ><small class="pull-right">To {{isCelcius ? 'Fahrenheit' : 'Celcius'}}</small></a>
+            <a (click)="isCelcius = !isCelcius" ><small class="pull-right cursor">To {{isCelcius ? 'Fahrenheit' : 'Celcius'}}</small></a>
             <h2 class="text-center text-capitalize">
                 <span class="text-primary">{{prefix}} {{weather.summary}}</span>  <small class="text-muted"> in {{weather.city}}, {{weather.country}}</small>
             </h2>

@@ -18,7 +18,7 @@ namespace seriously_weather.Controllers
             {
                 try
                 {
-                    var apiKey = Environment.GetEnvironmentVariable("OPEN_WEATHER_API_KEY");
+                    var apiKey = "eba3d4e84dc63dc0c2f56031075e5175";//Environment.GetEnvironmentVariable("OPEN_WEATHER_API_KEY");
                     client.BaseAddress = new System.Uri("http://api.openweathermap.org");
                     var response = await client.GetAsync($"/data/2.5/weather?q={city}&appid={apiKey}&units=imperial");
                     response.EnsureSuccessStatusCode();
